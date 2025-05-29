@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 //Obtener todos los usuarios
 module.exports.getAllUsers = async (req, res) => {
