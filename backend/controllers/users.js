@@ -1,5 +1,5 @@
 const User = require("../models/user");
-const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 //Obtener todos los usuarios
 module.exports.getAllUsers = async (req, res) => {
@@ -99,23 +99,15 @@ module.exports.deleteUser = async (req, res) => {
 };
 
 //Controlador de autenticación:
-module.exports.login = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email });
+module.exports.login = (req, res) => {
+  const { email, password } = req.body;
 
-    if (!user) {
-      return res.status(401).json({ message: "Email o password incorrectos" });
-    }
-
-    const matched = await bcrypt.compare(password, user.password);
-
-    if (!matched) {
-      return res.status(401).json({ message: "Email o password incorrectos" });
-    }
-
-    res.json({ message: "¡Todo bien!" });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+  return User.findUserByCredentials(email, password)
+    .then((user) => {
+      // ¡autenticación exitosa! el usuario está en la variable user
+    })
+    .catch((err) => {
+      // error de autenticación
+      res.status(401).send({ message: err.message });
+    });
 };

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -41,5 +42,24 @@ const userSchema = new mongoose.Schema({
     minlength: 8,
   },
 });
+
+// estamos añadiendo los métodos findUserByCredentials al esquema User
+// tendrá dos parámetros, email y password
+userSchema.statics.findUserByCredentials = function findUserByCredentials(
+  email,
+  password
+) {
+  return this.findOne({ email }).then((user) => {
+    if (!user) {
+      return Promise.reject(new Error("Email o contraseña incorrectos"));
+    }
+    return bcrypt.compare(password, user.password).then((matched) => {
+      if (!matched) {
+        return Promise.reject(new Error("Email o contraseña incorrectos"));
+      }
+      return user;
+    });
+  });
+};
 
 module.exports = mongoose.model("user", userSchema);
