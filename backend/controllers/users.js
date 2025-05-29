@@ -104,10 +104,12 @@ module.exports.login = (req, res) => {
 
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      // ¡autenticación exitosa! el usuario está en la variable user
+      const token = jwt.sign({ _id: user._id }, "some-secret-key", {
+        expiresIn: "7d",
+      });
+      res.send(token);
     })
     .catch((err) => {
-      // error de autenticación
       res.status(401).send({ message: err.message });
     });
 };
