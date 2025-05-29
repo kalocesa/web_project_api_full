@@ -27,8 +27,8 @@ module.exports.getUserById = async (req, res) => {
 //Crear un nuevo usuario
 module.exports.createUser = async (req, res) => {
   try {
-    const { name, about, avatar } = req.body;
-    const newUser = new User({ name, about, avatar });
+    const { name, about, avatar, email, password } = req.body;
+    const newUser = new User({ name, about, avatar, email, password });
     const saveNewUser = await newUser.save();
     res.status(201).json(saveNewUser);
   } catch (error) {

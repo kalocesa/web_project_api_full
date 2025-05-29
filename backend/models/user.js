@@ -5,13 +5,13 @@ const userSchema = new mongoose.Schema({
     type: String,
     minlength: 2,
     maxlength: 30,
-    required: [true, `El nombre del usuario es requerido`],
+    default: "Jacques Cousteau",
   },
   about: {
     type: String,
     minlength: 2,
     maxlength: 30,
-    required: [true, `El acerca del usuario es requerido`],
+    default: "Explorador",
   },
   avatar: {
     type: String,
@@ -21,7 +21,24 @@ const userSchema = new mongoose.Schema({
       },
       message: (props) => `${props.value} no es una URL valida`,
     },
-    required: [true, `El avatar del usuario es requerido`],
+    default:
+      "https://practicum-content.s3.us-west-1.amazonaws.com/resources/moved_avatar_1604080799.jpg",
+  },
+  email: {
+    type: String,
+    unique: true,
+    required: true,
+    validate: {
+      validator: function (v) {
+        return /^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/.test(v);
+      },
+      message: (props) => `${props.value} no es un email válido`,
+    },
+  },
+  password: {
+    type: String,
+    required: true,
+    minlength: 8,
   },
 });
 
