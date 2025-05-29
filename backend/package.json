@@ -1,0 +1,24 @@
+{
+  "name": "web_project_around_express",
+  "version": "1.0.0",
+  "description": "Blog personal para subir imagenes alrededor de EUA",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "npx eslint .",
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "author": "Katia Sandoval",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.56.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.31.0",
+    "nodemon": "^3.1.9"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "mongoose": "^8.13.2"
+  }
+}
