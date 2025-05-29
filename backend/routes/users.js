@@ -10,9 +10,6 @@ const {
 //ruta de todos los usuarios
 router.get("/", getAllUsers);
 
-//ruta de usuario por id
-router.get("/:id", getUserById);
-
 //ruta para actualizar un usuario (name, about)
 router.patch("/:id", updateUser);
 

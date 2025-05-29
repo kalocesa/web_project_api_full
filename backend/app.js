@@ -18,7 +18,7 @@ mongoose
 // Importar rutas
 const usersRouter = require("./routes/users");
 const cardsRouter = require("./routes/cards");
-const { createUser, login } = require("./controllers/users");
+const { createUser, login, getUserById } = require("./controllers/users");
 
 // Utilizar rutas
 app.use(express.json());
@@ -29,6 +29,7 @@ app.post("/signin", login);
 //autorización
 app.use(auth);
 app.use("/users", usersRouter);
+app.get("/users/me", auth, getUserById);
 app.use("/cards", auth, cardsRouter);
 
 // Manejar rutas no existentes

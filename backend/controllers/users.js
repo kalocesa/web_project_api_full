@@ -14,14 +14,15 @@ module.exports.getAllUsers = async (req, res) => {
 //Obtener un usuario por ID
 module.exports.getUserById = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id).orFail(() => {
-      const error = new Error("No se ha encontrado ningun usuario con ese id");
-      error.statusCode = 404;
-      throw error;
-    });
-    res.json(user);
+    const user = await User.findById(req.params.id).select("-password");
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: "No se ha encontrado ningún usuario con ese ID" });
+    }
+    res.status(200).json(user);
   } catch (error) {
-    res.status(500).json({ message: "Error al obtener al usuario", error });
+    res.status(error.statusCode || 500).json({ message: error.message });
   }
 };
 
