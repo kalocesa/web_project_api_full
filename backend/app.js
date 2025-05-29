@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const port = 3000;
+const auth = require("./middleware/auth");
 
 // Conexión a MongoDB
 mongoose
@@ -17,11 +18,18 @@ mongoose
 // Importar rutas
 const usersRouter = require("./routes/users");
 const cardsRouter = require("./routes/cards");
+const { createUser, login } = require("./controllers/users");
 
 // Utilizar rutas
 app.use(express.json());
+
+app.post("/signup", createUser);
+app.post("/signin", login);
+
+//autorización
+app.use(auth);
 app.use("/users", usersRouter);
-app.use("/cards", cardsRouter);
+app.use("/cards", auth, cardsRouter);
 
 // Manejar rutas no existentes
 app.use((req, res) => {
@@ -30,12 +38,4 @@ app.use((req, res) => {
 
 app.listen(port, () => {
   console.log(`Servidor escuchando en http://localhost:${port}`);
-});
-
-app.use((req, res, next) => {
-  req.user = {
-    _id: "6801d0f2e8e47dcc76afa2cd", // pega el _id del usuario de prueba que creamos en el paso anterior
-  };
-
-  next();
 });

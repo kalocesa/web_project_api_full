@@ -27,13 +27,13 @@ module.exports.getCardById = async (req, res) => {
 // Crear una tarjeta
 module.exports.createCard = async (req, res) => {
   try {
-    const { name, link, owner } = req.body;
-    if (!name || !link || !owner) {
+    const { name, link } = req.body;
+    if (!name || !link) {
       return res.status(400).json({
         message: "La solicitud no se puede procesar porque faltan elementos",
       });
     }
-    const newCard = new Card({ name, link, owner });
+    const newCard = new Card({ name, link, owner: req.user._id });
     const newCardSave = await newCard.save();
     res.status(201).json(newCardSave);
   } catch (error) {

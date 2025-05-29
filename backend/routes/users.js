@@ -2,7 +2,6 @@ const router = require("express").Router();
 const {
   getAllUsers,
   getUserById,
-  createUser,
   deleteUser,
   updateUser,
   updateAvatar,
@@ -13,9 +12,6 @@ router.get("/", getAllUsers);
 
 //ruta de usuario por id
 router.get("/:id", getUserById);
-
-//ruta para crear un nuevo usuario
-router.post("/", createUser);
 
 //ruta para actualizar un usuario (name, about)
 router.patch("/:id", updateUser);
