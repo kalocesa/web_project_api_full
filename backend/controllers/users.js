@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const bcrypt = require("bcrypt");
 
 //Obtener todos los usuarios
 module.exports.getAllUsers = async (req, res) => {
@@ -28,7 +29,14 @@ module.exports.getUserById = async (req, res) => {
 module.exports.createUser = async (req, res) => {
   try {
     const { name, about, avatar, email, password } = req.body;
-    const newUser = new User({ name, about, avatar, email, password });
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = new User({
+      name,
+      about,
+      avatar,
+      email,
+      password: hashedPassword,
+    });
     const saveNewUser = await newUser.save();
     res.status(201).json(saveNewUser);
   } catch (error) {
@@ -87,5 +95,27 @@ module.exports.deleteUser = async (req, res) => {
     res.status(200).json({ message: "Usuario eliminado" });
   } catch (error) {
     res.status(500).json({ message: "Error al obtener al usuario", error });
+  }
+};
+
+//Controlador de autenticación:
+module.exports.login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(401).json({ message: "Email o password incorrectos" });
+    }
+
+    const matched = await bcrypt.compare(password, user.password);
+
+    if (!matched) {
+      return res.status(401).json({ message: "Email o password incorrectos" });
+    }
+
+    res.json({ message: "¡Todo bien!" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
