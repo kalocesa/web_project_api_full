@@ -5,6 +5,7 @@ const app = express();
 const port = 3000;
 const auth = require("./middlewares/auth");
 const errorHandler = require("./middlewares/errorHandler");
+const { requestLogger, errorLogger } = require("./middlewares/logger");
 
 // Conexión a MongoDB
 mongoose
@@ -23,6 +24,8 @@ app.use(express.json());
 const usersRouter = require("./routes/users");
 const cardsRouter = require("./routes/cards");
 const { createUser, login, getUserById } = require("./controllers/users");
+
+app.use(requestLogger);
 
 app.post(
   "/signup",
@@ -47,6 +50,9 @@ app.use("/cards", auth, cardsRouter);
 app.use((err, req, res, next) => {
   res.status(err.statusCode).send({ message: err.message });
 });
+
+//logger de errores
+app.use(errorLogger);
 
 // Middleware para errores.
 app.use(errors());
