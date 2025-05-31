@@ -1,18 +1,16 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
     minlength: 2,
     maxlength: 30,
-    default: 'Jacques Cousteau',
   },
   about: {
     type: String,
     minlength: 2,
     maxlength: 30,
-    default: 'Explorador',
   },
   avatar: {
     type: String,
@@ -22,8 +20,6 @@ const userSchema = new mongoose.Schema({
       },
       message: (props) => `${props.value} no es una URL valida`,
     },
-    default:
-      'https://practicum-content.s3.us-west-1.amazonaws.com/resources/moved_avatar_1604080799.jpg',
   },
   email: {
     type: String,
@@ -48,21 +44,21 @@ const userSchema = new mongoose.Schema({
 // tendrá dos parámetros, email y password
 userSchema.statics.findUserByCredentials = function findUserByCredentials(
   email,
-  password,
+  password
 ) {
   return this.findOne({ email })
-    .select('+password')
+    .select("+password")
     .then((user) => {
       if (!user) {
-        return Promise.reject(new Error('Email o contraseña incorrectos'));
+        return Promise.reject(new Error("Email o contraseña incorrectos"));
       }
       return bcrypt.compare(password, user.password).then((matched) => {
         if (!matched) {
-          return Promise.reject(new Error('Email o contraseña incorrectos'));
+          return Promise.reject(new Error("Email o contraseña incorrectos"));
         }
         return user;
       });
     });
 };
 
-module.exports = mongoose.model('user', userSchema);
+module.exports = mongoose.model("user", userSchema);
