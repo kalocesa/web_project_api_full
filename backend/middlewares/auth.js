@@ -1,19 +1,19 @@
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
 
-  if (!authorization || !authorization.startsWith("Bearer ")) {
-    return res.status(403).send({ message: "Se requiere autorización" });
+  if (!authorization || !authorization.startsWith('Bearer ')) {
+    return res.status(403).send({ message: 'Se requiere autorización' });
   }
-  const token = authorization.replace("Bearer ", "");
+  const token = authorization.replace('Bearer ', '');
   let payload;
-  //verificar el token
+  // verificar el token
   try {
-    payload = jwt.verify(token, "some-secret-key");
+    payload = jwt.verify(token, 'some-secret-key');
   } catch (err) {
-    return res.status(401).send({ message: "Se requiere authorizacion" });
+    return res.status(401).send({ message: 'Se requiere authorizacion' });
   }
   req.user = payload;
-  next();
+  return next();
 };
