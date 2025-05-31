@@ -35,10 +35,8 @@ app.get("/users/me", auth, getUserById);
 app.use("/cards", auth, cardsRouter);
 
 // Manejar rutas no existentes
-app.use((req, res, next) => {
-  const error = new Error("Recurso solicitado no encontrado");
-  error.statusCode = 404;
-  next(error); // Enviar el error al middleware de manejo de errores
+app.use((err, req, res, next) => {
+  res.status(err.statusCode).send({ message: err.message });
 });
 
 //Middleware para errores.

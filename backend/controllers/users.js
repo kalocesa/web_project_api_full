@@ -1,6 +1,7 @@
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const NotFoundError = require("../errors/not-found-err");
 
 //Obtener todos los usuarios
 module.exports.getAllUsers = async (req, res) => {
@@ -17,13 +18,11 @@ module.exports.getUserById = async (req, res) => {
   try {
     const user = await User.findById(req.params.id).select("-password");
     if (!user) {
-      return res
-        .status(404)
-        .json({ message: "No se ha encontrado ningún usuario con ese ID" });
+      throw new NotFoundError("No se encontró ningún usuario con ese ID");
     }
     res.status(200).json(user);
-  } catch (error) {
-    res.status(error.statusCode || 500).json({ message: error.message });
+  } catch (err) {
+    next(err);
   }
 };
 
@@ -57,13 +56,11 @@ module.exports.updateUser = async (req, res) => {
       { name, about },
       { new: true, runValidators: true }
     ).orFail(() => {
-      const error = new Error("Usuario no encontrado");
-      error.statusCode = 404;
-      throw error;
+      throw new NotFoundError("No se encontró ningún usuario con ese ID");
     });
     res.json(updatedUser);
   } catch (error) {
-    res.status(500).json({ message: "Error al actualizar al usuario", error });
+    next(error);
   }
 };
 
@@ -77,13 +74,11 @@ module.exports.updateAvatar = async (req, res) => {
       { avatar },
       { new: true, runValidators: true }
     ).orFail(() => {
-      const error = new Error("Usuario no encontrado");
-      error.statusCode = 404;
-      throw error;
+      throw new NotFoundError("No se encontró ningún usuario con ese ID");
     });
     res.json(updateAvatar);
   } catch (error) {
-    res.status(500).json({ message: "Error al actulizar al usuario", error });
+    next(error);
   }
 };
 
@@ -92,11 +87,11 @@ module.exports.deleteUser = async (req, res) => {
   try {
     const user = await User.deleteOne();
     if (user.deletedCount === 0) {
-      res.status(404).json({ message: "Usuario no encontrado" });
+      throw new NotFoundError("No se encontró ningún usuario con ese ID");
     }
     res.status(200).json({ message: "Usuario eliminado" });
   } catch (error) {
-    res.status(500).json({ message: "Error al obtener al usuario", error });
+    next(error);
   }
 };
 
