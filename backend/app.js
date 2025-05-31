@@ -3,7 +3,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const port = 3000;
-const auth = require("./middleware/auth");
+const auth = require("./middlewares/auth");
+const errorHandler = require("./middlewares/errorHandler");
 
 // Conexión a MongoDB
 mongoose
@@ -15,13 +16,13 @@ mongoose
     console.error("Error al conectar a MongoDB:", err);
   });
 
+// Utilizar rutas
+app.use(express.json());
+
 // Importar rutas
 const usersRouter = require("./routes/users");
 const cardsRouter = require("./routes/cards");
 const { createUser, login, getUserById } = require("./controllers/users");
-
-// Utilizar rutas
-app.use(express.json());
 
 app.post("/signup", createUser);
 app.post("/signin", login);
@@ -34,9 +35,14 @@ app.get("/users/me", auth, getUserById);
 app.use("/cards", auth, cardsRouter);
 
 // Manejar rutas no existentes
-app.use((req, res) => {
-  res.status(404).json({ message: "Recurso solicitado no encontrado" });
+app.use((req, res, next) => {
+  const error = new Error("Recurso solicitado no encontrado");
+  error.statusCode = 404;
+  next(error); // Enviar el error al middleware de manejo de errores
 });
+
+//Middleware para errores.
+app.use(errorHandler);
 
 app.listen(port, () => {
   console.log(`Servidor escuchando en http://localhost:${port}`);
