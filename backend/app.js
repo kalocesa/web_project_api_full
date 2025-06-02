@@ -11,7 +11,7 @@ const { requestLogger, errorLogger } = require("./middlewares/logger");
 mongoose
   .connect("mongodb://localhost:27017/aroundb")
   .then(() => {
-    console.log("Conexión exitosa a MongoDB");
+    console.log("Conexión exitosa a mi base de datos MongoDB");
   })
   .catch((err) => {
     console.error("Error al conectar a MongoDB:", err);
