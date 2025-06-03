@@ -7,7 +7,7 @@ const auth = require("./middlewares/auth");
 const errorHandler = require("./middlewares/errorHandler");
 const { requestLogger, errorLogger } = require("./middlewares/logger");
 const cors = require("cors");
-
+require("dotenv").config();
 // Conexión a MongoDB
 mongoose
   .connect("mongodb://localhost:27017/aroundb")
