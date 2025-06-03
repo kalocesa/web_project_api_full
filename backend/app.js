@@ -6,6 +6,7 @@ const port = 3000;
 const auth = require("./middlewares/auth");
 const errorHandler = require("./middlewares/errorHandler");
 const { requestLogger, errorLogger } = require("./middlewares/logger");
+const cors = require("cors");
 
 // Conexión a MongoDB
 mongoose
@@ -20,6 +21,8 @@ mongoose
 // Utilizar rutas
 app.use(express.json());
 
+app.use(cors());
+app.options("*", cors());
 // Importar rutas
 const usersRouter = require("./routes/users");
 const cardsRouter = require("./routes/cards");
