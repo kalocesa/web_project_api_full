@@ -12,7 +12,12 @@ const app = express();
 const { PORT = 3000 } = process.env;
 const { requestLogger, errorLogger } = require("./middlewares/logger");
 const errorHandler = require("./middlewares/errorHandler");
-const allowedOrigins = ["http://localhost:3001"];
+const allowedOrigins = [
+  "http://localhost:3001",
+  "https://aroundmx.mooo.com",
+  "https://api.aroundmx.mooo.com",
+  "https://www.aroundmx.mooo.com",
+];
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin) return callback(null, true);
