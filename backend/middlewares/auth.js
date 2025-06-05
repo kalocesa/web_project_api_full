@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
   const { authorization } = req.headers;
 
   if (!authorization || !authorization.startsWith("Bearer ")) {
-    return res.status(403).send({ message: "Se requiere autorización" });
+    return res.status(403).send({ message: "Se requiere autorización,plis" });
   }
   const token = authorization.replace("Bearer ", "");
   let payload;
@@ -20,7 +20,7 @@ module.exports = (req, res, next) => {
       NODE_ENV === "production" ? JWT_SECRET : "dev-secret"
     );
   } catch (err) {
-    return res.status(401).send({ message: "Se requiere authorizacion" });
+    return res.status(401).send({ message: "Se requiere authorizacion, porfis" });
   }
   req.user = payload;
   return next();
