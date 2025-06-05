@@ -33,6 +33,7 @@ const corsOptions = {
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
+
 app.use((req, res, next) => {
   console.log(req);
   next();
@@ -45,7 +46,9 @@ mongoose
   .then(() => console.log("Conexión exitosa a MongoDB"))
   .catch((err) => console.error("Error al conectar a MongoDB:", err));
 
-app.use(cors(corsOptions)); // Aplicar CORS
+//app.use(cors(corsOptions)); // Aplicar CORS
+app.use(cors());
+app.options("*", cors());
 app.use(requestLogger); // Log de cada petición
 
 app.get("/crash-test", () => {
