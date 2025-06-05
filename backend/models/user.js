@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     minlength: 2,
     maxlength: 30,
+    default: "Explorador",
   },
   avatar: {
     type: String,
@@ -21,6 +22,8 @@ const userSchema = new mongoose.Schema({
       },
       message: (props) => `${props.value} no es una URL valida`,
     },
+    default:
+      "https://practicum-content.s3.us-west-1.amazonaws.com/resources/moved_avatar_1604080799.jpg",
   },
   email: {
     type: String,
