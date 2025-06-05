@@ -46,6 +46,13 @@ mongoose
   .then(() => console.log("Conexión exitosa a MongoDB"))
   .catch((err) => console.error("Error al conectar a MongoDB:", err));
 
+mongoose.connection.on("connected", () =>
+  console.log("✅ Conectado a MongoDB")
+);
+mongoose.connection.on("error", (err) =>
+  console.error("🚨 Error de conexión:", err)
+);
+
 //app.use(cors(corsOptions)); // Aplicar CORS
 app.use(cors());
 app.options("*", cors());
