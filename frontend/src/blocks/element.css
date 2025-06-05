@@ -1,0 +1,76 @@
+.element {
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 10px;
+  position: relative;
+}
+
+.element__image {
+  width: 100%;
+  height: 361px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.element__image:hover {
+  cursor: pointer;
+}
+
+.element__button-trash {
+  position: absolute;
+  top: 20px;
+  right: 15px;
+  background-image: url(../images/Trash.png);
+  background-color: transparent;
+  border: none;
+  object-fit: cover;
+  width: 31px;
+  height: 32px;
+}
+
+.element__button-trash:hover {
+  opacity: 60%;
+  cursor: pointer;
+}
+
+.element__group {
+  display: flex;
+  justify-content: space-between;
+  padding: 25px 15px 31px 21px;
+}
+
+.element__text {
+  max-width: 200px;
+  width: 100%;
+  font-size: 24px;
+  line-height: 29px;
+  font-weight: 900;
+  color: #000000;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.element__like {
+  border: none;
+  background-color: transparent;
+}
+
+.element__like:hover {
+  opacity: 60%;
+  cursor: pointer;
+}
+
+.element__button-like {
+  max-width: 21px;
+  width: 100%;
+  background-image: url(../images/likeButton.svg);
+  background-repeat: no-repeat;
+}
+
+.element__button-dislike {
+  max-width: 21px;
+  width: 100%;
+  background-image: url(../images/dislikeButton.svg);
+  background-repeat: no-repeat;
+}
