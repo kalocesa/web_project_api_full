@@ -1,7 +1,7 @@
 // 1. Importaciones y configuración inicial
 const express = require("express");
 const mongoose = require("mongoose");
-const { celebrate, Joi, errors } = require("celebrate");
+const { errors } = require("celebrate");
 require("dotenv").config();
 const cors = require("cors");
 const auth = require("./middlewares/auth");
@@ -45,13 +45,6 @@ mongoose
   .connect("mongodb://localhost:27017/aroundb")
   .then(() => console.log("Conexión exitosa a MongoDB"))
   .catch((err) => console.error("Error al conectar a MongoDB:", err));
-
-mongoose.connection.on("connected", () =>
-  console.log("✅ Conectado a MongoDB")
-);
-mongoose.connection.on("error", (err) =>
-  console.error("🚨 Error de conexión:", err)
-);
 
 //app.use(cors(corsOptions)); // Aplicar CORS
 app.use(cors());
