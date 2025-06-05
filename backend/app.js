@@ -42,7 +42,7 @@ app.use((req, res, next) => {
 app.use(express.json()); // Para manejar JSON correctamente
 
 mongoose
-  .connect("mongodb://34.169.30.122:27017/aroundb")
+  .connect("mongodb://127.0.0.1:27017/aroundb")
   .then(() => console.log("Conexión exitosa a MongoDB"))
   .catch((err) => console.error("Error al conectar a MongoDB:", err));
 
