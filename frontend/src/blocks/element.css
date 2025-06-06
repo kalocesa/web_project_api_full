@@ -1,5 +1,4 @@
 .element {
-  width: 100%;
   background-color: #ffffff;
   border-radius: 10px;
   position: relative;
@@ -36,12 +35,10 @@
 .element__group {
   display: flex;
   justify-content: space-between;
-  padding: 25px 15px 31px 21px;
+  padding: 30px;
 }
 
 .element__text {
-  max-width: 200px;
-  width: 100%;
   font-size: 24px;
   line-height: 29px;
   font-weight: 900;
@@ -54,6 +51,7 @@
 .element__like {
   border: none;
   background-color: transparent;
+  max-width: 21px;
 }
 
 .element__like:hover {
@@ -62,14 +60,12 @@
 }
 
 .element__button-like {
-  max-width: 21px;
   width: 100%;
   background-image: url(../images/likeButton.svg);
   background-repeat: no-repeat;
 }
 
 .element__button-dislike {
-  max-width: 21px;
   width: 100%;
   background-image: url(../images/dislikeButton.svg);
   background-repeat: no-repeat;

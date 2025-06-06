@@ -45,7 +45,6 @@ const Card = (props) => {
             props.handleLikeClick(props.card);
           }}
         ></button>
-        <span className="element__like-counter">0</span>
       </div>
     </div>
   );
