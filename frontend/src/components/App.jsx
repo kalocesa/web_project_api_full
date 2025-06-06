@@ -62,6 +62,8 @@ function App() {
         setIsLoggedIn(true);
         setUserEmail(email);
         localStorage.setItem("userEmail", email);
+        const userData = await api.getProfileInfo();
+        setCurrentUser(userData);
         navigate("/");
       } else {
         setTooltipInfo({
