@@ -143,7 +143,6 @@ function App() {
     removeToken();
     setIsLoggedIn(false);
     setUserEmail("");
-    setCurrentUser(null);
     navigate("/signin", { replace: true });
   }
 
