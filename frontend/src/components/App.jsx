@@ -13,7 +13,6 @@ import goodRegister from "../images/register-good.png";
 import badRegister from "../images/register-bad.png";
 import { getToken, removeToken, setToken } from "../utils/token";
 import Api from "../utils/api";
-import { getToken } from "./token";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
