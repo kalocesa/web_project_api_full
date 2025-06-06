@@ -80,18 +80,31 @@ function App() {
   };
 
   useEffect(() => {
-    api.getProfileInfo().then((data) => {
-      setCurrentUser(data);
-    });
+    setLoading(true); // Activa el estado de carga
+    api
+      .getProfileInfo()
+      .then((data) => {
+        setCurrentUser(data);
+        setLoading(false); // Desactiva la carga cuando llegan los datos
+      })
+      .catch((error) => {
+        console.error("Error al obtener usuario:", error);
+        setLoading(false);
+      });
   }, []);
 
   useEffect(() => {
+    setLoading(true);
     api
       .getInitialCards()
       .then((cards) => {
         setCards(cards);
+        setLoading(false);
       })
-      .catch((error) => console.error("Error al obtener las tarjetas:", error));
+      .catch((error) => {
+        console.error("Error al obtener tarjetas:", error);
+        setLoading(false);
+      });
   }, []);
 
   const handleUpdateUser = (data) => {
