@@ -22,6 +22,7 @@ function App() {
   const [userEmail, setUserEmail] = useState("");
   const navigate = useNavigate();
   const [cards, setCards] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const handleRegister = async (email, password) => {
     try {
@@ -103,19 +104,27 @@ function App() {
   useEffect(() => {
     const jwt = getToken();
     if (!jwt) {
+      setLoading(false);
       return;
     }
+
     auth
       .checkToken(jwt)
       .then((userData) => {
-        setIsLoggedIn(true);
-        setUserEmail(userData.email);
-        navigate("/");
+        if (userData && userData.email) {
+          setIsLoggedIn(true);
+          setUserEmail(userData.email);
+          navigate("/");
+        }
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error al verificar token:", error);
+        setLoading(false);
       });
   }, []);
+
+  if (loading) return <p>Cargando...</p>;
 
   function handleLogout() {
     localStorage.removeItem("userEmail");
