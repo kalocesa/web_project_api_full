@@ -81,6 +81,7 @@ function App() {
 
   useEffect(() => {
     api.getProfileInfo().then((data) => {
+      console.log("Datos recibidos para usuario:", data);
       setCurrentUser(data);
     });
   }, [currentUser]);
@@ -89,7 +90,8 @@ function App() {
     api
       .getInitialCards()
       .then((cards) => {
-        setCards(cards); // Asegura que el estado se actualiza con las tarjetas correctamente
+        console.log("Tarjetas obtenidas:", cards);
+        setCards(cards);
       })
       .catch((error) => console.error("Error al obtener las tarjetas:", error));
   }, [cards]);
