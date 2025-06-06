@@ -80,21 +80,21 @@ function App() {
   };
 
   useEffect(() => {
-    setLoading(true); // Activa el estado de carga
+    console.log("Ejecutando useEffect para cargar usuario...");
     api
       .getProfileInfo()
       .then((data) => {
+        console.log("Datos de usuario recibidos:", data);
         setCurrentUser(data);
-        setLoading(false); // Desactiva la carga cuando llegan los datos
       })
-      .catch((error) => {
-        console.error("Error al obtener usuario:", error);
-        setLoading(false);
-      });
+      .catch((error) => console.error("Error al obtener usuario:", error));
   }, []);
 
   useEffect(() => {
-    setLoading(true);
+    console.log("Estado actual de currentUser:", currentUser);
+  }, [currentUser]); // Se ejecuta cada vez que currentUser cambia
+
+  useEffect(() => {
     api
       .getInitialCards()
       .then((cards) => {
