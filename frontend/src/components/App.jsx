@@ -146,6 +146,9 @@ function App() {
     navigate("/signin", { replace: true });
   }
 
+  console.log("URL de API en getProfileInfo:", api.getProfileInfo);
+  console.log("URL de API en getInitialCards:", api.getInitialCards);
+
   return (
     <CurrentUserContext.Provider
       value={{ currentUser, handleUpdateUser, setCurrentUser }}
