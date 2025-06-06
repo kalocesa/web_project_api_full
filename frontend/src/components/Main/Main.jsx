@@ -6,15 +6,25 @@ import NewCard from "./form/NewCard/NewCard";
 import EditAvatar from "./form/EditAvatar/EditAvatar";
 import EditProfile from "./form/EditProfile/EditProfile";
 import Card from "./components/Card/Card";
-import { api } from "../../utils/api";
+import Api from "../../utils/api";
 import { useState, useEffect, useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
+import { getToken } from "../../utils/token";
 
 const Main = () => {
   const userContext = useContext(CurrentUserContext);
   const { currentUser, setCurrentUser } = userContext;
   const [cards, setCards] = useState([]);
   const [popup, setPopup] = useState(null);
+  const token = getToken();
+
+  const api = new Api({
+    baseUrl: "https://api.aroundmx.mooo.com",
+    headers: {
+      "Content-type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+  });
 
   const handleCreateCard = (title, link) => {
     api.addCards({ name: title, link }).then((response) => {
