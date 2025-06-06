@@ -83,7 +83,7 @@ function App() {
     api.getProfileInfo().then((data) => {
       setCurrentUser(data);
     });
-  }, []);
+  }, [currentUser]);
 
   useEffect(() => {
     api
@@ -92,7 +92,7 @@ function App() {
         setCards(cards); // Asegura que el estado se actualiza con las tarjetas correctamente
       })
       .catch((error) => console.error("Error al obtener las tarjetas:", error));
-  }, []);
+  }, [cards]);
 
   const handleUpdateUser = (data) => {
     api.editProfile(data.name, data.about).then((newData) => {
