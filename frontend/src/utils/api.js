@@ -1,7 +1,4 @@
-import { getToken } from "./token";
-const token = getToken();
-
-class Api {
+export default class Api {
   constructor({ baseUrl, headers }) {
     this.baseUrl = baseUrl; //token personal y se le agregarán las direcciones de usuario o tarjeta
     this.headers = headers; // mi encabezado contiene la autorización y el Content-type: application/jason.
@@ -79,14 +76,6 @@ class Api {
     }).then(this.checkResponse);
   }
 }
-
-export const api = new Api({
-  baseUrl: "https://api.aroundmx.mooo.com",
-  headers: {
-    "Content-type": "application/json",
-    authorization: `Bearer ${token}`,
-  },
-});
 
 /*{"usuario":{"nombre": "Jacques Cousteau", "acerca de": "Explorador", 
 "avatar": "https://practicum-content.s3.us-west-1.amazonaws.com/frontend-developer/common/avatar.jpg", 

@@ -8,11 +8,12 @@ import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 import { useState, useEffect } from "react";
-import { api } from "../utils/api";
 import * as auth from "../utils/auth";
 import goodRegister from "../images/register-good.png";
 import badRegister from "../images/register-bad.png";
 import { getToken, removeToken, setToken } from "../utils/token";
+import Api from "../utils/api";
+import { getToken } from "./token";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -23,6 +24,15 @@ function App() {
   const navigate = useNavigate();
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(true);
+  const token = getToken();
+
+  const api = new Api({
+    baseUrl: "https://api.aroundmx.mooo.com",
+    headers: {
+      "Content-type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+  });
 
   const handleRegister = async (email, password) => {
     try {
