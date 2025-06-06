@@ -81,20 +81,18 @@ function App() {
 
   useEffect(() => {
     api.getProfileInfo().then((data) => {
-      console.log("Datos recibidos para usuario:", data);
       setCurrentUser(data);
     });
-  }, [currentUser]);
+  }, []);
 
   useEffect(() => {
     api
       .getInitialCards()
       .then((cards) => {
-        console.log("Tarjetas obtenidas:", cards);
         setCards(cards);
       })
       .catch((error) => console.error("Error al obtener las tarjetas:", error));
-  }, [cards]);
+  }, []);
 
   const handleUpdateUser = (data) => {
     api.editProfile(data.name, data.about).then((newData) => {
