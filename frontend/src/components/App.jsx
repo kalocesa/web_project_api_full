@@ -54,15 +54,14 @@ function App() {
 
       if (data.token) {
         setToken(data.token);
+
+        setTooltipInfo({
+          img: goodRegister,
+          text: "¡Correcto! Has iniciado sesión.",
+        });
         setIsLoggedIn(true);
         setUserEmail(email);
         localStorage.setItem("userEmail", email);
-        setCurrentUser(null);
-        setTimeout(async () => {
-          const userData = await api.getProfileInfo();
-          setCurrentUser(userData);
-          console.log("Usuario actualizado después del login:", userData);
-        }, 100);
         navigate("/");
       } else {
         setTooltipInfo({
@@ -81,7 +80,6 @@ function App() {
   };
 
   useEffect(() => {
-    if (!isLoggedIn) return;
     api
       .getProfileInfo()
       .then((data) => {
@@ -89,7 +87,7 @@ function App() {
         setCurrentUser(data);
       })
       .catch((error) => console.error("Error al obtener usuario:", error));
-  }, [isLoggedIn]);
+  }, []);
 
   useEffect(() => {
     console.log("Estado actual de currentUser:", currentUser);
@@ -145,6 +143,7 @@ function App() {
     removeToken();
     setIsLoggedIn(false);
     setUserEmail("");
+    setCurrentUser(null);
     navigate("/signin", { replace: true });
   }
 
