@@ -84,7 +84,6 @@ export const api = new Api({
   baseUrl: "https://api.aroundmx.mooo.com",
   headers: {
     "Content-type": "application/json",
-    Accept: "application/json",
     authorization: `Bearer ${token}`,
   },
 });
