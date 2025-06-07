@@ -99,10 +99,6 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log("Estado actual de currentUser:", currentUser);
-  }, [currentUser]);
-
-  useEffect(() => {
     api
       .getInitialCards()
       .then((cards) => {
