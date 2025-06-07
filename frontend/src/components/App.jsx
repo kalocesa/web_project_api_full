@@ -92,7 +92,6 @@ function App() {
     api
       .getProfileInfo()
       .then((data) => {
-        console.log("Datos de usuario actualizados después del login:", data);
         setCurrentUser(data);
       })
       .catch((error) => console.error("Error al obtener usuario:", error));
